@@ -1,19 +1,20 @@
 # PBS configuration
 # If submitting to a different project to your default uncomment line below 
 # and change project code as appropriate
-project: g40
+project: e14
 queue: normal
 walltime: 4:00:00
-jobname: easterlies_control
+jobname: ssp585_windthermal
 ncpus: 5180
 storage:
         gdata:
                 - v45
+                - e14
                 - ik11
                 - x77
 
 # Force payu to always find, and save, files in this short (or scratch) project directory
-shortpath: /scratch/v45
+shortpath: /scratch/e14
 
 # Model configuration
 name: common
