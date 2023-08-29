@@ -1,0 +1,77 @@
+# PBS configuration
+# If submitting to a different project to your default uncomment line below 
+# and change project code as appropriate
+project: oz91
+queue: normal
+walltime: 4:00:00
+jobname: ssp245_windthermal
+ncpus: 5180
+storage:
+        gdata:
+                - v45
+                - e14
+                - ik11
+                - x77
+
+# Force payu to always find, and save, files in this short (or scratch) project directory
+shortpath: /scratch/e14
+
+# Model configuration
+name: common
+model: access-om2
+input: /g/data/ik11/inputs/access-om2/input_08022019/common_01deg_jra55
+submodels:
+    - name: atmosphere
+      model: yatm
+      exe: /g/data/ik11/inputs/access-om2/bin/yatm_1bb8904.exe
+      input: 
+          - /g/data/e14/hd4873/access-om2-01/project03_cmip6_forcing/JRA55-do_input_files/ssp245/
+          - /g/data/e14/hd4873/access-om2-01/project03_cmip6_forcing/JRA55-do_input_files/V1-3/
+          - /g/data/ik11/inputs/access-om2/input_08022019/yatm_01deg
+      ncpus: 1
+
+    - name: ocean
+      model: mom
+      exe: /g/data/ik11/inputs/access-om2/bin/fms_ACCESS-OM_97e3429_libaccessom2_1bb8904.x
+      input:
+          - /g/data/ik11/inputs/access-om2/input_08022019/mom_01deg
+      ncpus: 4358
+
+    - name: ice
+      model: cice5
+      exe: /g/data/ik11/inputs/access-om2/bin/cice_auscom_3600x2700_722p_d3e8bdf_libaccessom2_1bb8904.exe
+      input: /g/data/ik11/inputs/access-om2/input_08022019/cice_01deg
+      ncpus: 799
+
+      #restart: /g/data/ik11/outputs/access-om2-01/01deg_jra55v13_ryf9091/restart995/
+
+
+# Collation
+collate:
+  restart:  true
+  mpi:  true
+  walltime: 1:00:00
+  mem: 64GB
+  ncpus: 4
+  queue: normal
+  exe: /g/data/ik11/inputs/access-om2/bin/mppnccombine-fast
+
+# Misc
+runlog: true
+stacksize: unlimited
+restart_freq: 1  # use tidy_restarts.py instead
+###mpirun: -mca coll_hcoll_enable 1  ##--mca pml yalla -x MXM_LOG_FILE=$PBS_JOBFS/mxm.log
+qsub_flags: -W umask=027 
+#storage:
+#      gdata:
+#          - ua8
+# set number of cores per node (28 for normalbw, 48 for normal on gadi)
+platform:
+    nodesize: 48
+mpi:
+    module: openmpi/4.0.1
+
+
+# DANGER! Do not uncomment this without checking the script is synching 
+# to the correct location!
+#postscript: sync_output_to_gdata.sh
