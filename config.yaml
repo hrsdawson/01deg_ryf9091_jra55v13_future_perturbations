@@ -1,7 +1,7 @@
 # PBS configuration
 # If submitting to a different project to your default uncomment line below 
 # and change project code as appropriate
-project: oz91
+project: e14
 queue: normal
 walltime: 4:00:00
 jobname: ssp585_windthermal
@@ -14,7 +14,7 @@ storage:
                 - x77
 
 # Force payu to always find, and save, files in this short (or scratch) project directory
-shortpath: /scratch/e14
+shortpath: /scratch/oz91
 
 # Model configuration
 name: common
