@@ -3,7 +3,7 @@
 #PBS -l ncpus=1
 #PBS -l wd
 #PBS -l storage=gdata/ik11+gdata/cj50+gdata/e14+scratch/e14+scratch/oz91
-#PBS -l walltime=12:00:00,mem=2GB
+#PBS -l walltime=24:00:00,mem=2GB
 #PBS -P e14
 #PBS -N output_to_gdata
 
